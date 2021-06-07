@@ -1,0 +1,27 @@
+
+<%- include("header") -%>
+
+    <div class="box" id="heading">
+      <h1><%= listTitle + " " + kindOfToday %></h1>
+    </div>
+
+    <div class="box">
+      <form action="/delete" method="post">
+        <% typeOfList.forEach(function(e){ %>
+          <div class="item">
+            <input type="checkbox" name="chkItem" value="<%= e._id %>" onChange="this.form.submit()"/>
+            <p><%= e.name %></p>
+          </div>
+        <% }); %>
+        <input type="hidden" name="listName" value="<%= listTitle %>">
+      </form>
+
+      <div class="item">
+        <form class="item" action="/" method="post">
+          <input type="text" name="anotherItem" placeholder="Add item in the list" autocomplete="off"/>
+          <button type="submit" name="listItems" value=<%= listTitle %>>+</button>
+        </form>
+      </div>
+    </div>
+
+<%- include("footer") -%>
