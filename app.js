@@ -6,7 +6,7 @@ const _ = require("lodash");
 const date = require(__dirname + "/date.js");
 
 const app = express();
-const port = 3000;
+let port = process.env.PORT;
 const db = "todoListDB";
 
 let todos = ["Buy Rigs", "Setup Rigs", "Data Mining"];
@@ -188,7 +188,10 @@ app.get("/about", function(req, res){
   res.render("about");
 });
 
-// Checks if the server is running
-app.listen(port || process.env.PORT, function(){
-  console.log("Server is up and running on port " + port);
+// Checks if the server is running on null
+if (port == null || port == "") {
+  port = 8000;
+}
+app.listen(port, function(){
+  console.log("Server is up and running");
 });
