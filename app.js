@@ -4,11 +4,15 @@ const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const _ = require("lodash");
 const date = require(__dirname + "/date.js");
+const access = require(__dirname + "/access.js");
 
 const app = express();
-let port = process.env.PORT;
-const db = "todoListDB";
+const getAccess = access.getAccess();
+const db = getAccess.mongoDB;
+const ui = getAccess.userDB;
+const pw = getAccess.passDB;
 
+let port = process.env.PORT;
 let todos = ["Buy Rigs", "Setup Rigs", "Data Mining"];
 let works = [];
 
@@ -17,7 +21,7 @@ app.use(express.static("public"));
 app.set("view engine", "ejs");
 
 //mongodb://localhost:27017/
-mongoose.connect("mongodb+srv://admin-paolo:P@ssw0rd@cluster0.53p3v.mongodb.net/"+db, {
+mongoose.connect("mongodb+srv://" + ui + ":" + pw + "@cluster0.53p3v.mongodb.net/"+ db, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
   useFindAndModify: false
@@ -59,6 +63,8 @@ const defaultItems = [item1, item2, item3];
 
 //Default List
 app.get("/", function(req, res){
+
+  console.log(getAccess.userDB);
 
   Item.find(function(err, docs){
 
@@ -190,7 +196,7 @@ app.get("/about", function(req, res){
 
 // Checks if the server is running on null
 if (port == null || port == "") {
-  port = 8000;
+  port = 3000;
 }
 app.listen(port, function(){
   console.log("Server is up and running");
