@@ -189,6 +189,6 @@ app.get("/about", function(req, res){
 });
 
 // Checks if the server is running
-app.listen(port, function(){
+app.listen(port || process.env.PORT, function(){
   console.log("Server is up and running on port " + port);
 });
